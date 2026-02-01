@@ -32,7 +32,8 @@ const index = ref(0);
 const isLoading = ref(true);
 const globalCharIndex = ref(0);
 const startTime = ref(null);
-const wpm = ref(0);
+const endTime = ref(null);
+const gamemode = ref('limited-60s');
 
 let generateScores = null;
 let keydownWrapper = null;
@@ -62,13 +63,23 @@ onMounted(async () => {
     }
 
     const WPM = calculateWPM(Date.now(), startTime, correctStreak);
-    console.log(WPM);
+    //console.log(WPM);
     const accuracyPercentage = 100 * correctStreak / (correctStreak + incorrectStreak);
-    console.log(accuracyPercentage ? Math.round(accuracyPercentage) + '%' : '0%');
-    const timer = new Date() - new Date(startTime.value);
-    console.log('Timer: ' + new Date(timer).getSeconds() + 's');
+    //console.log(accuracyPercentage ? Math.round(accuracyPercentage) + '%' : '0%');
+    let timer = new Date() - new Date(startTime.value);
+    console.log(timer);
+    timer = new Date(timer).getMinutes();
+    console.log(timer);
 
-    console.log(correctStreak + '/' + incorrectStreak);
+    //console.log(correctStreak + '/' + incorrectStreak);
+
+    // Timer
+    if (gamemode.value === 'limited-60s') {
+      endTime.value = 1;
+      if (timer >= endTime.value) {
+        window.location.href = '/result';
+      }
+    }
   }, 1000);
 
 

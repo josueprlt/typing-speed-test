@@ -1,81 +1,127 @@
 <template>
-    <section class="flex flex-wrap gap-x-2 gap-y-1 mt-[32px] text-[32px]">
-        <span v-for="(word, wIdx) in words" :key="`word-${wIdx}`" class="word">
-            <span v-for="charObj in word" :key="`char-${charObj.id}`" :id="`char-${charObj.id}`"
-                :class="`${index === charObj.id ? characterStyle.current : ''}`">
-                {{ charObj.char }}
+  <div class="container overflow-hidden">
+    <section id="sectionId" class="h-auto whitespace-pre-wrap text-[60px] text-white">
+            <span v-for="(word, wIdx) in words" :key="`word-${wIdx}`" class="word">
+                <span v-for="charObj in word" :key="`char-${charObj.id}`" :id="`char-${charObj.id}`" :class="[
+                    index === charObj.id ? characterStyle.current : '',
+                    charObj.status === 'correct' ? characterStyle.correct : '',
+                    charObj.status === 'incorrect' ? characterStyle.incorrect : ''
+                ]">
+
+<!--                    <UTooltip v-if="charObj.status === 'incorrect'" :text="'You - ' + charObj.incorrectChar"
+                              :delay-duration="0" arrow>
+                        <span>{{ charObj.char }}</span>
+                    </UTooltip>-->
+
+                    <span>{{ charObj.char }}</span>
+
+                </span>
             </span>
-        </span>
     </section>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import {onMounted, onUnmounted, ref, watch} from 'vue';
+import handleKeydown from "~/utils/handleKeydown.js";
+
+const wpm = useState('wpm');
+const accuracy = useState('accuracy');
+const timer = useState('timer');
 
 const text = ref("");
 const words = ref([]);
-let index = ref(0);
+const index = ref(0);
+const isLoading = ref(true);
+const globalCharIndex = ref(0);
+const startTime = ref(null);
+const endTime = ref(null);
+const gamemode = ref('limited-60s');
+
+let generateScores = null;
+let keydownWrapper = null;
 
 const characterStyle = {
-    correct: "text-green-500",
-    incorrect: "text-red-500",
-    current: "underline"
+  correct: "text-green-500",
+  incorrect: "text-red-500 underline",
+  current: "animate-[cursorAnimation_0.5s_infinite_alternate] rounded-[2px]"
 }
-
-async function generateParagraphs() {
-    let para = "";
-    try {
-        for (let i = 0; i < 5; i++) {
-            const data = await $fetch('https://api.adviceslip.com/advice');
-            const response = await JSON.parse(data);
-            para += response.slip.advice + " ";
-        }
-        return para.trim();
-    } catch (error) {
-        console.error('Error fetching paragraphs:', error);
-        return "";
-    }
-}
-
-function generateJson(paragraph) {
-    const rawWords = paragraph.match(/[a-zA-Z0-9à-ÿÀ-ß]+(?:[''\-][a-zA-Z0-9à-ÿÀ-ß]+)*|[^a-zA-Z0-9à-ÿÀ-ß\s]/g) || [];
-
-    let globalCharIndex = 0;
-
-    return rawWords.map(word => {
-        return word.split('').map(char => {
-            return {
-                char: char,
-                id: globalCharIndex++
-            };
-        });
-    });
-}
-
 
 onMounted(async () => {
-    text.value = await generateParagraphs();
-    words.value = generateJson(text.value);
-    window.addEventListener('keydown', handleKeydown);
+  generateScores = setInterval(() => {
+    if (!startTime.value) return;
+
+    let correctStreak = 0;
+    let incorrectStreak = 0;
+
+    for (const word of words.value) {
+      for (const char of word) {
+        if (char.status === "correct") {
+          correctStreak++;
+        } else if (char.status === "incorrect") {
+          incorrectStreak++;
+        }
+      }
+    }
+
+    wpm.value = calculateWPM(Date.now(), startTime, correctStreak);
+    accuracy.value = 100 * correctStreak / (correctStreak + incorrectStreak);
+    timer.value = new Date() - new Date(startTime.value);
+
+    //console.log(correctStreak + '/' + incorrectStreak);
+
+    // Timer
+    if (gamemode.value === 'limited-60s') {
+      endTime.value = 1;
+      if (new Date(timer.value).getMinutes() >= endTime.value) {
+        window.location.href = '/result';
+      }
+    }
+  }, 1000);
+
+
+  isLoading.value = true;
+  text.value = await getParagraph(1);
+  words.value = generateJson(text.value, globalCharIndex);
+
+  keydownWrapper = (event) => {
+    handleKeydown(event, startTime, index, words);
+  };
+
+  window.addEventListener('keydown', keydownWrapper);
+
+  watch(index, async () => {
+    await automatiseScroll(index);
+    await generateText(text, words, globalCharIndex);
+  });
 });
 
 onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeydown);
+  if (keydownWrapper) {
+    window.removeEventListener('keydown', keydownWrapper);
+  }
+  clearInterval(generateScores);
 });
 
-function handleKeydown(event) {
-    const key = event.key;
-    console.log(`Key pressed: ${key}`);
-
-    if (key === 'Shift' || key === 'CapsLock' || key === 'Tab' || key === 'Alt' || key === 'Control' || key === 'Meta') {
-        return;
-    }
-
-    if (key === text.value[index.value]) {
-        console.log(`✅ Matched character: ${text.value[index.value]} at index ${index.value}`);
-        index.value++;
-    } else {
-        console.log(`💥 Mismatched character: expected ${text.value[index.value]}, got ${key}`);
-    }
-}
 </script>
+
+<style>
+@keyframes cursorAnimation {
+
+  0% {
+    background: #414141;
+  }
+
+  50% {
+    background: #414141;
+  }
+
+  51% {
+    background: #121212;
+  }
+
+  100% {
+    background: #121212;
+  }
+}
+</style>

@@ -11,7 +11,6 @@ export default async function (text, words, globalCharIndex) {
     const containerRect = containerElt.getBoundingClientRect();
     const parentRect = parentElt.getBoundingClientRect();
 
-    console.log(parentRect.bottom, containerRect.bottom, (parentRect.bottom - 200) <= containerRect.bottom)
     if ((parentRect.bottom - 200) <= containerRect.bottom) {
         const paragraph = await getParagraph();
         text.value += paragraph;

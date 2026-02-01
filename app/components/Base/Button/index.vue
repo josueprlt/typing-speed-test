@@ -28,8 +28,8 @@ const icons = {
 </script>
 
 <template>
-    <button @click="clickFunction" type="button"
-        class="flex gap-[10px] px-[16px] py-[10px] bg-none rounded-[12px] focus:outline-none focus:ring-2 focus:ring-offset-[3px] focus:ring-offset-[#121212] text-[20px] font-semibold"
+    <button @click="clickFunction()" type="button"
+        class="flex gap-2.5 px-4 py-2.5 bg-none rounded-[12px] focus:outline-none focus:ring-2 focus:ring-offset-[3px] focus:ring-offset-[#121212] text-[20px] font-semibold cursor-pointer"
         :class="colors[color]">
         {{ name }}
         <img v-if="icon" :src="icons[icon].source" :alt="icons[icon].label">
