@@ -1,0 +1,13 @@
+export const useWpm = () => useState('wpm', () => 0)
+export const useBestWpm = () => useState('bestWpm', () => 0)
+export const useAccuracy= () => useState('accuracy', () => 0)
+export const useCorrectStreak = () => useState('correctStreak', () => 0)
+export const useIncorrectStreak = () => useState('incorrectStreak', () => 0)
+export const useIsStarted = () => useState('isStarted', () => false)
+export const useGamemode = () => useState('gamemode', () => 'Timed (60s)')
+export const useDifficulty = () => useState('difficulty', () => 'Easy')
+
+export const useText = () => useState('text', () => "")
+export const useWords = () => useState('words', () => [])
+export const useIndex = () => useState('index', () => 0)
+export const useGlobalCharIndex = () => useState('globalCharIndex', () => 0)

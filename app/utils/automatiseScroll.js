@@ -1,4 +1,4 @@
-import {nextTick} from "vue";
+import { nextTick } from "vue";
 
 export default async function (index) {
     await nextTick();
@@ -9,8 +9,8 @@ export default async function (index) {
     if (!actualCarac || !parentElt) return;
 
     actualCarac.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: 'auto',
+        block: 'nearest',
         inline: 'nearest'
     });
 }

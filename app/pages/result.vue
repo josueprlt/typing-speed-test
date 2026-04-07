@@ -1,80 +1,109 @@
 <template>
-    <BaseHeader />
+  <BaseHeader/>
 
-    <section class="relative flex flex-col items-center gap-[24px] mt-[70px] md:mt-[80px] md:gap-[32px] xl:mt-[64px]">
-        <img class="absolute top-7 left-2 size-[21px] md:size-[32px]" src="/icons/asterix.svg" alt="Asterix Icon">
-        <img class="absolute -bottom-14 right-6 size-[39px] md:size-[74px]" src="/icons/star.svg" alt="Star Icon">
-        <div class="size-[48px] rounded-full 
-                    ring-[10px] ring-[#18281C]
-                    ring-offset-[10px] ring-offset-[#23492F] 
-                    flex items-center justify-center">
-            <img src="/icons/check_circle.svg" alt="Check Circle" />
-        </div>
+  <section class="relative flex flex-col items-center gap-6 mt-17.5 md:mt-20 md:gap-8 xl:mt-16">
+    <img class="absolute top-7 left-2 size-5.25 md:size-8" src="/icons/asterix.svg" alt="Asterix Icon">
+    <img class="absolute -bottom-14 right-6 size-9.75 md:size-18.5" src="/icons/star.svg" alt="Star Icon">
+    <div
+        :class="result !== 'best' && 'size-12 rounded-full ring-10 ring-[#18281C] ring-offset-10 ring-offset-[#23492F] flex items-center justify-center'">
+      <img :src="`/icons/${icons[result].url}`" :alt="icons[result].label"/>
+    </div>
 
-        <div class="flex flex-col items-center gap-[10px] mt-[16px]">
-            <h1 class="text-[24px] font-bold md:text-[40px]">Test Complete!</h1>
-            <p class="text-[#949497] text-[16px] text-center md:text-[18px] mt-[8px]">Solid run. Keep pushing to beat
-                your high score.</p>
-        </div>
+    <div class="flex flex-col items-center gap-2.5 mt-4">
+      <h1 class="text-[24px] font-bold md:text-[40px]">{{ isStarted ? "--" : title[result] }}</h1>
+      <p class="text-[#949497] text-[16px] text-center md:text-[18px] mt-2">{{
+          isStarted ? "--" : sousTitle[result]
+        }}</p>
+    </div>
 
-        <div class="flex flex-col justify-center items-center w-full gap-[16px] md:flex-row md:gap-[20px] md:mb-[32px] md:mt-[20px]">
-            <div class="flex flex-col w-full gap-[12px] px-[24px] py-[16px] rounded-[8px] border border-[#3A3A3A] max-w-[350px]">
-                <p class="text-[20px] text-[#949497]">WPM:</p>
-                <p class="text-[24px] font-bold">85</p>
-            </div>
-            <div class="flex flex-col w-full gap-[12px] px-[24px] py-[16px] rounded-[8px] border border-[#3A3A3A] max-w-[350px]">
-                <p class="text-[20px] text-[#949497]">Accuracy:</p>
-                <p class="text-[24px] font-bold text-[#D64D5B]">90%</p>
-            </div>
-            <div class="flex flex-col w-full gap-[12px] px-[24px] py-[16px] rounded-[8px] border border-[#3A3A3A] max-w-[350px]">
-                <p class="text-[20px] text-[#949497]">Characters:</p>
-                <p class="text-[24px] font-bold text-[#717178]"><span class="text-[#4DD67B]">120</span>/<span class="text-[#D64D5B]">5</span></p>
-            </div>
-        </div>
+    <div class="flex flex-col justify-center items-center w-full gap-4 md:flex-row md:gap-5 md:mb-8 md:mt-5">
+      <div class="flex flex-col w-full gap-3 px-6 py-4 rounded-[8px] border border-[#3A3A3A] max-w-87.5">
+        <p class="text-[20px] text-[#949497]">WPM:</p>
+        <p class="text-[24px] font-bold">{{ isStarted ? "--" : wpm }}</p>
+      </div>
+      <div class="flex flex-col w-full gap-3 px-6 py-4 rounded-[8px] border border-[#3A3A3A] max-w-87.5">
+        <p class="text-[20px] text-[#949497]">Accuracy:</p>
+        <p class="text-[24px] font-bold text-[#D64D5B]">{{ isStarted ? "--" : Math.trunc(accuracy) }}%</p>
+      </div>
+      <div class="flex flex-col w-full gap-3 px-6 py-4 rounded-[8px] border border-[#3A3A3A] max-w-87.5">
+        <p class="text-[20px] text-[#949497]">Characters:</p>
+        <p class="text-[24px] font-bold text-[#717178]"><span class="text-[#4DD67B]">{{
+            isStarted ? "--" : correctStreak
+          }}</span>/<span
+            class="text-[#D64D5B]">{{ isStarted ? "--" : incorrectStreak }}</span></p>
+      </div>
+    </div>
 
-        <BaseButton name="Go Again" icon="dark_retry" color="third" />
-    </section>
+    <BaseButton :name="buttonText[result]" icon="dark_retry" color="third" :clickFunction="() => navigateTo('/')"/>
+  </section>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
-import { confetti } from "@tsparticles/confetti";
+import {onMounted, onUnmounted, ref} from 'vue';
+import generateParticle from "~/utils/generateParticle.js";
+import {
+  useWpm,
+  useBestWpm,
+  useAccuracy,
+  useCorrectStreak,
+  useIncorrectStreak,
+  useIsStarted
+} from "~/composables/useGameData.js";
 
 let interval = null;
+const result = ref('current');
+
+const title = {
+  'current': 'Test Complete!',
+  'first': 'Baseline Established!',
+  'best': 'High Score Smashed!'
+}
+const sousTitle = {
+  'current': 'Solid run. Keep pushing to beat your high score.',
+  'first': 'You’ve set the bar. Now the real challenge begins—time to beat it.',
+  'best': 'You’re getting faster. That was incredible typing.'
+}
+const icons = {
+  'current': {url: 'check_circle.svg', label: 'Check Circle Icon'},
+  'first': {url: 'check_circle.svg', label: 'Check Circle Icon'},
+  'best': {url: 'party.svg', label: 'Party Popper Icon'},
+}
+const buttonText = {
+  'current': 'Go Again',
+  'first': 'Beat This Score',
+  'best': 'Beat This Score',
+}
+
+const isStarted = useIsStarted()
+const wpm = useWpm()
+const bestWpm = useBestWpm()
+const accuracy = useAccuracy()
+const correctStreak = useCorrectStreak();
+const incorrectStreak = useIncorrectStreak();
 
 onMounted(() => {
-    const duration = 10 * 1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+  if (isStarted.value) return;
 
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
+  if (bestWpm.value) {
+    if (wpm.value > bestWpm.value) {
+      localStorage.setItem('bestWpm', wpm.value);
+      result.value = 'best';
+      bestWpm.value = wpm.value;
+    } else {
+      result.value = 'current';
     }
+  } else {
+    localStorage.setItem('bestWpm', wpm.value);
+    result.value = 'first';
+    bestWpm.value = wpm.value;
+  }
 
-    interval = setInterval(function() {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-            return clearInterval(interval);
-        }
-
-        const particleCount = 15 * (timeLeft / duration);
-
-        confetti({
-            ...defaults,
-            particleCount,
-            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-        });
-        
-        confetti({
-            ...defaults,
-            particleCount,
-            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-        });
-    }, 250);
+  if (result.value === 'best' || result.value === 'first') {
+    generateParticle(interval);
+  }
 });
 
 onUnmounted(() => {
-    if (interval) clearInterval(interval);
+  if (interval) clearInterval(interval);
 });
 </script>

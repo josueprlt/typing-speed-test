@@ -1,5 +1,5 @@
 <template>
-  <div class="container overflow-hidden">
+  <div class="container">
     <section id="sectionId" class="h-auto whitespace-pre-wrap text-[60px] text-white">
             <span v-for="(word, wIdx) in words" :key="`word-${wIdx}`" class="word">
                 <span v-for="charObj in word" :key="`char-${charObj.id}`" :id="`char-${charObj.id}`" :class="[
@@ -24,19 +24,31 @@
 <script setup>
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import handleKeydown from "~/utils/handleKeydown.js";
+import {
+  useWpm,
+  useAccuracy,
+  useIsStarted,
+  useCorrectStreak,
+  useIncorrectStreak,
+  useGamemode, useText, useWords, useIndex, useGlobalCharIndex
+} from "~/composables/useGameData.js";
 
-const wpm = useState('wpm');
-const accuracy = useState('accuracy');
+const wpm = useWpm()
+const accuracy = useAccuracy();
+const correctStreak = useCorrectStreak();
+const incorrectStreak = useIncorrectStreak();
+const isStarted = useIsStarted();
+const gamemode = useGamemode();
 const timer = useState('timer');
+const isLoading = useState('isLoading');
 
-const text = ref("");
-const words = ref([]);
-const index = ref(0);
-const isLoading = ref(true);
-const globalCharIndex = ref(0);
+const text = useText();
+const words = useWords();
+const index = useIndex();
+const globalCharIndex = useGlobalCharIndex();
+
 const startTime = ref(null);
 const endTime = ref(null);
-const gamemode = ref('limited-60s');
 
 let generateScores = null;
 let keydownWrapper = null;
@@ -48,41 +60,55 @@ const characterStyle = {
 }
 
 onMounted(async () => {
-  generateScores = setInterval(() => {
-    if (!startTime.value) return;
+  wpm.value = 0
+  accuracy.value = 100
+  correctStreak.value = 0
+  incorrectStreak.value = 0
+  timer.value = 0
 
-    let correctStreak = 0;
-    let incorrectStreak = 0;
+  isLoading.value = true;
+  generateScores = setInterval(() => {
+    if (!startTime.value || !isStarted.value) return;
+
+    let localCorrect = 0;
+    let localIncorrect = 0;
 
     for (const word of words.value) {
       for (const char of word) {
-        if (char.status === "correct") {
-          correctStreak++;
-        } else if (char.status === "incorrect") {
-          incorrectStreak++;
+        if (char.status === 'correct') {
+          localCorrect++;
+        } else if (char.status === 'incorrect') {
+          localIncorrect++;
         }
       }
     }
 
-    wpm.value = calculateWPM(Date.now(), startTime, correctStreak);
-    accuracy.value = 100 * correctStreak / (correctStreak + incorrectStreak);
-    timer.value = new Date() - new Date(startTime.value);
+    correctStreak.value = localCorrect;
+    incorrectStreak.value = localIncorrect;
 
-    //console.log(correctStreak + '/' + incorrectStreak);
+    wpm.value = calculateWPM(Date.now(), startTime, correctStreak.value);
+    if ((correctStreak.value + incorrectStreak.value) === 0) {
+      accuracy.value = 100;
+    } else {
+      accuracy.value = 100 * correctStreak.value / (correctStreak.value + incorrectStreak.value);
+    }
 
     // Timer
-    if (gamemode.value === 'limited-60s') {
+    console.log("gamemode.value : " + gamemode.value)
+    if (gamemode.value === 'Timed (60s)') {
+      timer.value = new Date() - new Date(startTime.value);
+
       endTime.value = 1;
       if (new Date(timer.value).getMinutes() >= endTime.value) {
-        window.location.href = '/result';
+        isStarted.value = false;
+        navigateTo('/result');
       }
     }
   }, 1000);
 
-
-  isLoading.value = true;
-  text.value = await getParagraph(1);
-  words.value = generateJson(text.value, globalCharIndex);
+  for (let i = 1; i <= 2; i++) {
+    await generateText(text, words, globalCharIndex);
+  }
 
   keydownWrapper = (event) => {
     handleKeydown(event, startTime, index, words);
@@ -92,8 +118,11 @@ onMounted(async () => {
 
   watch(index, async () => {
     await automatiseScroll(index);
-    await generateText(text, words, globalCharIndex);
+    await generateText(text, words, globalCharIndex, index);
   });
+  
+  isLoading.value = false;
+  document.querySelector('#sectionId').addEventListener('click', () => isStarted.value = true);
 });
 
 onUnmounted(() => {

@@ -1,4 +1,5 @@
-export default async function(nbrs = 1) {
+export default async function (nbrs = 1) {
+
     try {
         const data = await $fetch(`/api/paragraph/${nbrs}`);
 

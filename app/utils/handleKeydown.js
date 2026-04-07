@@ -1,4 +1,10 @@
+import {useIsStarted} from "~/composables/useGameData.js";
+
 export default function (event, startTime, index, words) {
+    const isStarted = useIsStarted();
+
+    if (!isStarted.value) return;
+
     const key = event.key;
     const notIncludesKey = ['Shift', 'CapsLock', 'Tab', 'Alt', 'Control', 'Meta', 'Dead', 'Escape', 'AltGraph']
 

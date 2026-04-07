@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen max-h-screen overflow-hidden px-4 md:px-8">
+  <div class="flex flex-col h-screen max-h-screen overflow-y-hidden px-4 md:px-8">
 
     <BaseHeader/>
 
@@ -11,28 +11,32 @@
         <BaseConfiguration/>
       </section>
 
-      <section class="relative flex-1 min-h-0 overflow-hidden mt-4">
+      <section class="relative flex-1 min-h-0 mt-4">
 
         <div
             v-show="!isStarted"
             class="flex flex-col items-center gap-5 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
-          <BaseButton name="Start Typing Test" color="secondary" :clickFunction="() => isStarted = true"/>
+          <BaseButton name="Start Typing Test" color="secondary" :clickFunction="() => isStarted = true"
+                      :isLoading="isLoading"/>
           <p class="text-[20px] text-nowrap font-semibold">Or click the text and start typing</p>
         </div>
 
         <div id="containerId" class="h-full overflow-y-hidden"
              :class="isStarted ? '' : 'blur-md'">
-          <BaseText />
+          <BaseText/>
         </div>
       </section>
     </main>
+    <BaseFooter/>
   </div>
 </template>
 
 <script setup>
-const wpm = useState('wpm', () => 0);
-const accuracy = useState('accuracy', () => 0);
-const timer = useState('timer', () => 0);
+import {useWpm, useAccuracy, useIsStarted} from "~/composables/useGameData.js";
 
-const isStarted = ref(false)
+const wpm = useWpm();
+const accuracy = useAccuracy();
+const isStarted = useIsStarted();
+const timer = useState('timer', () => 0);
+const isLoading = useState('isLoading', () => true);
 </script>
