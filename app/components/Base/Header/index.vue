@@ -1,11 +1,13 @@
 <template>
   <header class="flex justify-between">
-    <div class="flex gap-2.5">
-      <img src="/icons/logo.svg" alt="Logo" class="w-6.25 md:w-7.5"/>
-      <NuxtLink to="/info" class="hidden md:block">
+    <div class="flex items-center gap-2.5">
+      <NuxtLink to="/about">
+        <img src="/icons/logo.svg" alt="Logo" class="w-6.25 md:w-7.5"/>
+      </NuxtLink>
+      <div @click="resetGame('/')" class="cursor-pointer hidden md:block">
         <h1 class="text-[#ffffff] text-[28px] font-bold">Typing Speed Test</h1>
         <h2 class="text-[#949497] text-sm">Type as fast as you can in 60 seconds</h2>
-      </NuxtLink>
+      </div>
     </div>
     <div class="flex gap-2.5 items-center">
       <img src="/icons/trophy.svg" alt="Trophy" class="w-4.5"/>
@@ -19,6 +21,7 @@
 <script setup>
 import {onMounted} from 'vue'
 import {useBestWpm} from '~/composables/useGameData'
+import resetGame from "~/utils/resetGame.js";
 
 const bestWpm = useBestWpm();
 

@@ -1,6 +1,4 @@
 <template>
-  <BaseHeader/>
-
   <section class="relative flex flex-col items-center gap-6 mt-17.5 md:mt-20 md:gap-8 xl:mt-16">
     <img class="absolute top-7 left-2 size-5.25 md:size-8" src="/icons/asterix.svg" alt="Asterix Icon">
     <img class="absolute -bottom-14 right-6 size-9.75 md:size-18.5" src="/icons/star.svg" alt="Star Icon">
@@ -34,7 +32,7 @@
       </div>
     </div>
 
-    <BaseButton :name="buttonText[result]" icon="dark_retry" color="third" :clickFunction="() => navigateTo('/')"/>
+    <BaseButton :name="buttonText[result]" icon="dark_retry" color="third" :clickFunction="() => resetGame('/')"/>
   </section>
 </template>
 
