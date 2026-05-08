@@ -24,14 +24,15 @@ const colors = {
 const icons = {
   'dark_retry': {source: '/icons/dark_retry.svg', label: 'Dark Retry Icon'},
   'light_retry': {source: '/icons/light_retry.svg', label: 'Light Retry Icon'},
+  'back': {source: '/icons/back.svg', label: 'Back Icon'},
 }
 
 </script>
 
 <template>
-  <button @click="clickFunction()" type="button"
-          class="flex gap-2.5 px-4 py-2.5 bg-none rounded-[12px] focus:outline-none focus:ring-2 focus:ring-offset-[3px] focus:ring-offset-[#121212] text-[20px] font-semibold cursor-pointer"
-          :class="colors[color]">
+  <button @click="clickFunction()" :disabled="isLoading" type="button"
+          class="flex items-center gap-2.5 px-4 py-2.5 bg-none rounded-[12px] focus:outline-none focus:ring-2 focus:ring-offset-[3px] focus:ring-offset-[#121212] text-[20px] font-semibold"
+          :class="[colors[color], isLoading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer']">
     <img src="/icons/loader.svg" alt="Loader" v-if="isLoading" class="w-6 h-6 animate-spin"/>
     {{ name }}
     <img v-if="icon" :src="icons[icon].source" :alt="icons[icon].label">
