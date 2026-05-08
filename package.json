@@ -11,6 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@mistralai/mistralai": "^2.2.1",
     "@nuxt/ui": "^4.4.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@tailwindcss/postcss": "^4.1.18",
@@ -21,6 +22,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.14.0"
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/node": "^25.6.0"
   }
 }

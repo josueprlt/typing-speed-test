@@ -1,5 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    runtimeConfig: {
+        mistraApiKey: process.env.MISTRAL_API_KEY,
+        promptDifficultyEasy: process.env.PROMPT_DIFFICULTY_EASY,
+        promptDifficultyMedium: process.env.PROMPT_DIFFICULTY_MEDIUM,
+        promptDifficultyHard: process.env.PROMPT_DIFFICULTY_HARD,
+    },
     compatibilityDate: '2025-07-15',
     devtools: {enabled: false},
     postcss: {

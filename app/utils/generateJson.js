@@ -1,4 +1,8 @@
 export default function (paragraph, globalCharIndex) {
+    if (!paragraph || typeof paragraph !== 'string') {
+        return [];
+    }
+
     const wordStrings = paragraph.split(' ').filter(str => str.length > 0);
 
     return wordStrings.map((wordStr) => {

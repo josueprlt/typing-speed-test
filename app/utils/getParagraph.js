@@ -1,15 +1,18 @@
-export default async function (nbrs = 1) {
+import {useDifficulty} from "~/composables/useGameData.js";
+
+export default async function () {
+    const difficulty = useDifficulty();
 
     try {
-        const data = await $fetch(`/api/paragraph/${nbrs}`);
+        console.log(difficulty.value)
+        const data = await $fetch(`/api/text/${difficulty.value}`);
 
-        if (!data) {
-            throw new Error("Erreur lors de la récupération");
+        if (data) {
+            console.log("Texte reçu :", data);
         }
         return data;
-
-    } catch (err) {
-        console.error("API Error, fallback used:", err.message);
-        return "The quick brown fox jumps over the lazy dog. ";
+    } catch (error) {
+        console.error("Erreur lors de la récupération du paragraphe :", error);
+        return null;
     }
 }
