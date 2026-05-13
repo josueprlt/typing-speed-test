@@ -3,18 +3,11 @@
     <section id="sectionId" class="h-auto whitespace-pre-wrap text-[60px] text-white">
             <span v-for="(word, wIdx) in words" :key="`word-${wIdx}`" class="word">
                 <span v-for="charObj in word" :key="`char-${charObj.id}`" :id="`char-${charObj.id}`" :class="[
-                    index === charObj.id ? characterStyle.current : '',
+                    index === charObj.id && isStarted ? characterStyle.current : '',
                     charObj.status === 'correct' ? characterStyle.correct : '',
                     charObj.status === 'incorrect' ? characterStyle.incorrect : ''
                 ]">
-
-<!--                    <UTooltip v-if="charObj.status === 'incorrect'" :text="'You - ' + charObj.incorrectChar"
-                              :delay-duration="0" arrow>
-                        <span>{{ charObj.char }}</span>
-                    </UTooltip>-->
-
                     <span>{{ charObj.char }}</span>
-
                 </span>
             </span>
     </section>
@@ -30,7 +23,7 @@ import {
   useIsStarted,
   useCorrectStreak,
   useIncorrectStreak,
-  useGamemode, useText, useWords, useIndex, useGlobalCharIndex
+  useGamemode, useText, useWords, useIndex, useGlobalCharIndex, useIsLoading
 } from "~/composables/useGameData.js";
 
 const wpm = useWpm()
@@ -39,8 +32,8 @@ const correctStreak = useCorrectStreak();
 const incorrectStreak = useIncorrectStreak();
 const isStarted = useIsStarted();
 const gamemode = useGamemode();
+const isLoading = useIsLoading();
 const timer = useState('timer');
-const isLoading = useState('isLoading');
 
 const text = useText();
 const words = useWords();
@@ -107,7 +100,7 @@ onMounted(async () => {
   }, 1000);
 
   for (let i = 1; i <= 2; i++) {
-    await generateText(text, words, globalCharIndex);
+    await generateText(text, words, globalCharIndex, null);
   }
 
   keydownWrapper = (event) => {
@@ -120,7 +113,7 @@ onMounted(async () => {
     await automatiseScroll(index);
     await generateText(text, words, globalCharIndex, index);
   });
-  
+
   isLoading.value = false;
   document.querySelector('#sectionId').addEventListener('click', () => isStarted.value = true);
 });
@@ -133,24 +126,3 @@ onUnmounted(() => {
 });
 
 </script>
-
-<style>
-@keyframes cursorAnimation {
-
-  0% {
-    background: #414141;
-  }
-
-  50% {
-    background: #414141;
-  }
-
-  51% {
-    background: #121212;
-  }
-
-  100% {
-    background: #121212;
-  }
-}
-</style>

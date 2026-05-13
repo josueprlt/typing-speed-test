@@ -9,8 +9,8 @@ export default async function (index) {
     if (!actualCarac || !parentElt) return;
 
     actualCarac.scrollIntoView({
-        behavior: 'auto',
-        block: 'nearest',
+        behavior: 'smooth',
+        block: 'center',
         inline: 'nearest'
     });
 }

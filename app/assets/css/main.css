@@ -1,2 +1,21 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@keyframes cursorAnimation {
+
+    0% {
+        background: #414141;
+    }
+
+    50% {
+        background: #414141;
+    }
+
+    51% {
+        background: #121212;
+    }
+
+    100% {
+        background: #121212;
+    }
+}

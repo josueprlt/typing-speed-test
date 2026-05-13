@@ -6,8 +6,11 @@ export const useIncorrectStreak = () => useState('incorrectStreak', () => 0)
 export const useIsStarted = () => useState('isStarted', () => false)
 export const useGamemode = () => useState('gamemode', () => 'Timed (60s)')
 export const useDifficulty = () => useState('difficulty', () => 'Easy')
+export const useLastIncorrectStreak = () => useState('incorrectStreak', () => 0)
 
 export const useText = () => useState('text', () => "")
 export const useWords = () => useState('words', () => [])
 export const useIndex = () => useState('index', () => 0)
 export const useGlobalCharIndex = () => useState('globalCharIndex', () => 0)
+
+export const useIsLoading = () => useState('isLoading', () => true)

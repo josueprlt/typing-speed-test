@@ -36,9 +36,6 @@ const modeOptions = [
 
 const gamemode = useGamemode();
 const difficulty = useDifficulty();
-const isStarted = useIsStarted();
-const wpm = useWpm();
-const accuracy = useAccuracy();
 
 const selectedDifficult = ref(difficultOptions.find(d => d.label === difficulty.value) || difficultOptions[0]);
 const selectedMode = ref(modeOptions.find(m => m.label === gamemode.value) || modeOptions[0]);
