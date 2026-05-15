@@ -6,12 +6,22 @@
 
   <section class="flex flex-col gap-2">
     <h2 class="text-[22px] font-bold md:text-[35px] flex gap-2 before:block before:content-['#'] before:text-green-500">
+      Description</h2>
+    <div class="rounded-md p-4 bg-[#242424]">
+      <p>Developed with passion to help users improve their typing speed and accuracy, this project aimed to create a
+        minimalist and distraction-free environment for accurately measuring typing speed. The project originated from a
+        challenge proposed by the Frontend Mentor team called "typing speed test".</p>
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-2">
+    <h2 class="text-[22px] font-bold md:text-[35px] mt-10 flex gap-2 before:block before:content-['#'] before:text-green-500">
       Creator</h2>
     <div class="rounded-md p-4 bg-[#242424]">
-      <p>Developed as a passion project to help users improve their typing speed
-        and accuracy. The goal was to
-        create a minimalist, distraction-free environment that accurately measures words per minute (WPM) using standard
-        testing methodologies.</p>
+      <p>My name is Josué Perrault, I am 22 years old and I am currently a 4th year student in a Master's program in Web
+        Engineering (IW) at ESGI in Rennes. Learn more through <a target="_blank" class="text-green-500 hover:underline"
+                                                                  href="https://portfolio-josue.com">my online
+          portfolio</a></p>
     </div>
   </section>
 
@@ -21,8 +31,8 @@
     <section class="flex flex-col gap-2 lg:grid lg:grid-cols-3 lg:gap-4">
       <div class="rounded-md p-4 bg-[#242424] border-l-3 border-green-500">
         <h3 class="font-bold pb-2">Easy</h3>
-        <p>Consists of the 500 most common English words. No punctuation, no capitalization. Ideal for beginners
-          focusing purely on speed and muscle memory without the cognitive load of special characters.</p>
+        <p>Consists of the 500 most common English words. Ideal for beginners focusing purely on speed and muscle memory
+          without the cognitive load of special characters.</p>
       </div>
       <div class="rounded-md p-4 bg-[#242424] border-l-3 border-orange-500">
         <h3 class="font-bold pb-2">Medium</h3>
@@ -31,8 +41,8 @@
       </div>
       <div class="rounded-md p-4 bg-[#242424] border-l-3 border-red-500">
         <h3 class="font-bold pb-2">Hard</h3>
-        <p>Complex vocabulary, frequent use of advanced punctuation (em-dashes, quotes, parentheses), numbers, and
-          technical terms. Designed to challenge experienced typists and simulate real-world technical data entry.</p>
+        <p>Complex vocabulary, frequent use of advanced punctuation. Designed to challenge experienced typists and
+          simulate real-world technical data entry.</p>
       </div>
     </section>
   </section>
