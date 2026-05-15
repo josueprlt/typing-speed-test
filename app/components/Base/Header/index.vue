@@ -9,12 +9,12 @@
         <h2 class="text-[#949497] text-sm">Type as fast as you can in 60 seconds</h2>
       </div>
     </div>
-    <div class="flex gap-2.5 items-center">
+    <NuxtLink to="/achievements" class="flex gap-2.5 items-center">
       <img src="/icons/trophy.svg" alt="Trophy" class="w-4.5"/>
       <p class="text-[#949497] flex gap-1 text-[16px] md:text-[18px]"><span class="hidden md:block">Personal </span>Best:
         <span
             class="text-[#ffffff]">{{ bestWpm }} WPM</span></p>
-    </div>
+    </NuxtLink>
   </header>
 </template>
 

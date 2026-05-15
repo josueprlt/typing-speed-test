@@ -15,8 +15,8 @@ export default async function generateText(text, words, globalCharIndex, index =
     if ((parentRect.bottom - 200) <= containerRect.bottom) {
         const paragraph = await getParagraph();
         if (!paragraph) return;
-        text.value += paragraph.text;
-        const wordsArray = generateJson(paragraph.text, globalCharIndex);
+        text.value += paragraph;
+        const wordsArray = generateJson(paragraph, globalCharIndex);
         words.value = words.value.concat(wordsArray);
     }
 }

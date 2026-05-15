@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "theme": "wpm",
+    "title": "Speedster I",
+    "description": "Achieve a minimum score of 40 wpm",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 40
+  },
+  {
+    "id": 2,
+    "theme": "wpm",
+    "title": "Speedster II",
+    "description": "Achieve a minimum score of 60 wpm",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 60
+  },
+  {
+    "id": 3,
+    "theme": "wpm",
+    "title": "Speedster III",
+    "description": "Achieve a minimum score of 80 wpm",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 80
+  },
+  {
+    "id": 4,
+    "theme": "wpm",
+    "title": "Speedster IV",
+    "description": "Achieve a minimum score of 100 wpm",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 100
+  },
+  {
+    "id": 5,
+    "theme": "accuracy",
+    "title": "Bullseye I",
+    "description": "Achieve a minimum accuracy of 85%",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 85
+  },
+  {
+    "id": 6,
+    "theme": "accuracy",
+    "title": "Bullseye II",
+    "description": "Achieve a minimum accuracy of 90%",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 90
+  },
+  {
+    "id": 7,
+    "theme": "accuracy",
+    "title": "Bullseye III",
+    "description": "Achieve a minimum accuracy of 95%",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 95
+  },
+  {
+    "id": 8,
+    "theme": "accuracy",
+    "title": "Bullseye IV",
+    "description": "Achieve a minimum accuracy of 100%",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 100
+  },
+  {
+    "id": 9,
+    "theme": "wpm-accuracy",
+    "title": "Versatile I",
+    "description": "Achieve a minimum score of 40 and 100% accuracy.",
+    "isUnlocked": false,
+    "currentScoreWpm": 0,
+    "currentScoreAccuracy": 0,
+    "achieveScoreWpm": 40,
+    "achieveScoreAccuracy": 100
+  },
+  {
+    "id": 10,
+    "theme": "wpm-accuracy",
+    "title": "Versatile II",
+    "description": "Achieve a minimum score of 60 and 95% accuracy.",
+    "isUnlocked": false,
+    "currentScoreWpm": 0,
+    "currentScoreAccuracy": 0,
+    "achieveScoreWpm": 60,
+    "achieveScoreAccuracy": 95
+  },
+  {
+    "id": 11,
+    "theme": "timer",
+    "title": "Timer I",
+    "description": "Play for 5 minutes in Sandbox mode",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 300000
+  },
+  {
+    "id": 12,
+    "theme": "timer",
+    "title": "Timer II",
+    "description": "Play for 15 minutes in Sandbox mode",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 900000
+  },
+  {
+    "id": 13,
+    "theme": "timer",
+    "title": "Timer III",
+    "description": "Play for 1 hour in Sandbox mode",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 3600000
+  },
+  {
+    "id": 14,
+    "theme": "timer",
+    "title": "Timer IV",
+    "description": "Play for 5 hours in Sandbox mode",
+    "isUnlocked": false,
+    "currentScore": 0,
+    "achieveScore": 18000000
+  }
+]

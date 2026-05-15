@@ -23,8 +23,9 @@ import {
   useIsStarted,
   useCorrectStreak,
   useIncorrectStreak,
-  useGamemode, useText, useWords, useIndex, useGlobalCharIndex, useIsLoading
+  useGamemode, useText, useWords, useIndex, useGlobalCharIndex, useIsLoading, useSuccessStorage
 } from "~/composables/useGameData.js";
+import updateSuccess from "~/utils/updateSuccess.js";
 
 const wpm = useWpm()
 const accuracy = useAccuracy();
@@ -33,6 +34,7 @@ const incorrectStreak = useIncorrectStreak();
 const isStarted = useIsStarted();
 const gamemode = useGamemode();
 const isLoading = useIsLoading();
+const successStorage = useSuccessStorage()
 const timer = useState('timer');
 
 const text = useText();
@@ -87,15 +89,17 @@ onMounted(async () => {
     }
 
     // Timer
-    console.log("gamemode.value : " + gamemode.value)
+    timer.value = new Date() - new Date(startTime.value);
     if (gamemode.value === 'Timed (60s)') {
-      timer.value = new Date() - new Date(startTime.value);
-
       endTime.value = 1;
+
       if (new Date(timer.value).getMinutes() >= endTime.value) {
         isStarted.value = false;
+        updateSuccess(successStorage.value, wpm.value, accuracy.value);
         navigateTo('/result');
       }
+    } else if (gamemode.value === 'Sandbox') {
+      updateSuccess(successStorage.value, null, null)
     }
   }, 1000);
 

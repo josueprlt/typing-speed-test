@@ -7,6 +7,7 @@ export const useIsStarted = () => useState('isStarted', () => false)
 export const useGamemode = () => useState('gamemode', () => 'Timed (60s)')
 export const useDifficulty = () => useState('difficulty', () => 'Easy')
 export const useLastIncorrectStreak = () => useState('incorrectStreak', () => 0)
+export const useSuccessStorage = () => useState('successStorage', () => [])
 
 export const useText = () => useState('text', () => "")
 export const useWords = () => useState('words', () => [])
