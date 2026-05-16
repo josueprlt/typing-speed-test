@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         '/achievements': { prerender: true },
     },
     runtimeConfig: {
-        mistraApiKey: process.env.MISTRAL_API_KEY,
+        mistralApiKey: process.env.MISTRAL_API_KEY,
         promptDifficultyEasy: process.env.PROMPT_DIFFICULTY_EASY,
         promptDifficultyMedium: process.env.PROMPT_DIFFICULTY_MEDIUM,
         promptDifficultyHard: process.env.PROMPT_DIFFICULTY_HARD,
