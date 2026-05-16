@@ -65,7 +65,7 @@
       <tbody>
       <tr>
         <th scope="row" class="p-2 md:py-2 md:px-4 bg-[#1F1F1F]">Current Version</th>
-        <td class="p-2 md:py-2 md:px-4">v1.1.2</td>
+        <td class="p-2 md:py-2 md:px-4">v1.1.3</td>
       </tr>
       <tr class="border-t border-b border-[#374151]">
         <th scope="row" class="p-2 md:py-2 md:px-4 bg-[#1F1F1F]">Development Time</th>

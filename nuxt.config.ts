@@ -1,5 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    nitro: {
+        preset: 'netlify'
+    },
+    routeRules: {
+        '/': { prerender: true },
+        '/result': { prerender: true },
+        '/about': { prerender: true },
+        '/achievements': { prerender: true },
+    },
     runtimeConfig: {
         mistraApiKey: process.env.MISTRAL_API_KEY,
         promptDifficultyEasy: process.env.PROMPT_DIFFICULTY_EASY,
