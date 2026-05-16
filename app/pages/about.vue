@@ -65,7 +65,7 @@
       <tbody>
       <tr>
         <th scope="row" class="p-2 md:py-2 md:px-4 bg-[#1F1F1F]">Current Version</th>
-        <td class="p-2 md:py-2 md:px-4">v1.2.4</td>
+        <td class="p-2 md:py-2 md:px-4">v1.1.2</td>
       </tr>
       <tr class="border-t border-b border-[#374151]">
         <th scope="row" class="p-2 md:py-2 md:px-4 bg-[#1F1F1F]">Development Time</th>
@@ -76,9 +76,9 @@
         <td class="p-2 md:py-2 md:px-4">
           <ul class="list-disc ml-4">
             <li>Custom word lists (upload JSON)</li>
-            <li>Multiplayer racing mode</li>
             <li>Detailed historical performance graphs</li>
             <li>Theme customization (Light/Dark variants)</li>
+            <li>Add more achievements</li>
           </ul>
         </td>
       </tr>
