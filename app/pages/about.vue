@@ -49,6 +49,22 @@
 
   <section class="flex flex-col gap-2">
     <h2 class="text-[22px] font-bold md:text-[35px] mt-10 flex gap-2 before:block before:content-['#'] before:text-green-500">
+      Game Mode</h2>
+    <section class="flex flex-col gap-2 lg:grid lg:grid-cols-2">
+      <div class="rounded-md p-4 bg-[#242424]">
+        <h3 class="font-bold pb-2">Timed (60s)</h3>
+        <p>This is the main game mode. You must do the best you can within a limited time of 60 seconds. Most
+          score-related achievements should be done in this game mode.</p>
+      </div>
+      <div class="rounded-md p-4 bg-[#242424]">
+        <h3 class="font-bold pb-2">Sandbox</h3>
+        <p>As the name suggests, it's free. You can write as much as you want with unlimited time.</p>
+      </div>
+    </section>
+  </section>
+
+  <section class="flex flex-col gap-2">
+    <h2 class="text-[22px] font-bold md:text-[35px] mt-10 flex gap-2 before:block before:content-['#'] before:text-green-500">
       Technology Stack</h2>
     <div class="flex gap-2 flex-wrap rounded-md p-4 bg-[#242424]">
       <p class="px-2 py-1 rounded-sm bg-[#1A1A1A] border border-[#374151]">Nuxt</p>
@@ -75,7 +91,6 @@
         <th scope="row" class="p-2 md:py-2 md:px-4 bg-[#1F1F1F]">Upcoming Features</th>
         <td class="p-2 md:py-2 md:px-4">
           <ul class="list-disc ml-4">
-            <li>Custom word lists (upload JSON)</li>
             <li>Detailed historical performance graphs</li>
             <li>Theme customization (Light/Dark variants)</li>
             <li>Add more achievements</li>
